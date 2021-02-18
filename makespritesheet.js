@@ -52,14 +52,11 @@ function makeSpriteSheet(animationData, options) {
     if (node.id) {
       node.id = prefix + node.id;
     }
-    if (node.getAttribute('filter')) {
-      node.setAttribute('filter', adjustHashURL(node.getAttribute('filter'), prefix));
-    }
-    if (node.getAttribute('mask')) {
-      node.setAttribute('mask', adjustHashURL(node.getAttribute('mask'), prefix));
-    }
-    if (node.getAttribute('clip-path')) {
-      node.setAttribute('clip-path', adjustHashURL(node.getAttribute('clip-path'), prefix));
+    for (const attribute of ['filter', 'mask', 'clip-path', 'fill', 'stroke']) {
+      const value = node.getAttribute(attribute);
+      if (value) {
+        node.setAttribute(attribute, adjustHashURL(value, prefix));
+      }
     }
     for (var i = 0; i < node.childNodes.length; i++) {
       makeUnique(node.childNodes[i], prefix);
